@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
 const nextHandler = nextApp.getRequestHandler();
 
-let port = 3000;
+let port = 10875;
 
 // io.on("connect", (socket) => {
 //   socket.emit("now", {
