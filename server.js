@@ -7,24 +7,16 @@ const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
 const nextHandler = nextApp.getRequestHandler();
 
-let port = 10875;
-
-// io.on("connect", (socket) => {
-//   socket.emit("now", {
-//     message: "heller from server",
-//   });
-//   console.log("a user connected");
-// });
+let PORT = process.env.PORT || 3000;
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  // socket.emit("now", {
-  //   message: "heller from server",
-  // });
+
   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
     console.log("message: " + msg);
   });
+
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
@@ -35,8 +27,10 @@ nextApp.prepare().then(() => {
     return nextHandler(req, res);
   });
 
-  server.listen(port, (err) => {
+  server.listen(PORT, (err) => {
     if (err) throw err;
-    console.log(`> Read on http://localhost:${port}`);
+    console.log(`> Read on http://localhost:${PORT}`);
   });
 });
+
+setInterval(() => io.emit("time", new Date().toTimeString()), 1000);

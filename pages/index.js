@@ -1,27 +1,13 @@
-// import Head from "next/head";
-
-// export default function Home() {
-//   return (
-//     <div>
-//       <Head>
-//         <title>DoSan</title>
-//         <link rel="icon" href="/favicon.ico" />
-//       </Head>
-
-//       <main>Hello Dosan</main>
-//     </div>
-//   );
-// }
-
 import { Component } from "react";
 import io from "socket.io-client";
 
-const socket = io();
+let socket = io();
 class Medium extends Component {
   constructor(props) {
     super(props);
     this.state = {
       hello: "",
+      // time: "",
     };
   }
 
@@ -29,6 +15,10 @@ class Medium extends Component {
     socket.on("chat message", (msg) => {
       return this.setState({ hello: msg });
     });
+
+    // socket.on("time", (timeString) => {
+    //   return this.setState({ time: timeString });
+    // });
   }
 
   handleSubmit = (e) => {
@@ -41,6 +31,7 @@ class Medium extends Component {
     return (
       <>
         <h1>{this.state.hello}</h1>
+        {/* <h1>{this.state.time}</h1> */}
 
         <form onSubmit={this.handleSubmit}>
           <input
